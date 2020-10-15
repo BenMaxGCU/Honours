@@ -45,6 +45,15 @@ This tutorial depends on the following libraries:
 * Anaconda (Python Environment)
 * Install all dependencies through anaconda and select the conda environment as a Python Interpreter
 
+### Installing Anaconda Environment
+* Install Anaconda: https://www.anaconda.com/products/individual
+* Open Anaconda Prompt with 'Run as Adminstrator'
+* Type 'conda create -n KerasGPU python=3.5' and follow install instructions
+* Type 'conda activate KerasGPU'
+* Type 'conda install tensorflow' (This is a cpu only version)
+* Type 'conda install keras-gpu'
+* Type 'conda install scikit-image'
+
 
 ### Run main.py
 
