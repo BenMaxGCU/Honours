@@ -23,6 +23,7 @@ data_gen_args = dict(rotation_range=0.2,
 imgs_train,imgs_mask_train = loadTrainNpy()
 #Running the geneTrainNpy method takes a while due to going through larger amounts of augmented data
 
+# Multiple models were tested in main, finally settling between simple_unet and crf_unet as my main models for training as they yield the best results
 model = crf_unet()
 #model = simple_unet()
 early_stopping = EarlyStopping(monitor='loss', patience=6, min_delta=0.0001, mode='min')

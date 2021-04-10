@@ -215,7 +215,7 @@ def crf_unet(pretrained_weights = None,input_size = (320,480,1)):
     return model
 
 # Smaller network still based off of U-Net architecture using LeakyReLu
-def lrcrf_unet(pretrained_weights = None,input_size = (320,480,1)):
+def lrcrf_unet(pretrained_weights = None,input_size = (250,250,1)):
     inputs = Input(input_size)
     leaky_relu = LeakyReLU(alpha=0.2)
 

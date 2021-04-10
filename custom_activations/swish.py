@@ -8,9 +8,6 @@ class Swish(Activation):
         super(Swish, self).__init__(activation, **kwargs)
         self.__name__ = 'swish'
 
-#def swish(x, beta = 1):
-    #return (x * K.sigmoid(beta * x))
-
 def swish(x):
     return (K.sigmoid(x) * x)
 

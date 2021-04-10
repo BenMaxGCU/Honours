@@ -5,41 +5,41 @@ import cv2
 import skimage.io as io
 import skimage.transform as trans
 
-def adjustData(img,mask,flag_multi_class,num_class):
+def adjustData(img,mask,flag_multi_class,num_class, target_size = (320,480)):
     if(flag_multi_class):
         img = img / 255
         mask = mask[:,:,:,0] if(len(mask.shape) == 4) else mask[:,:,0]
         new_mask = np.zeros(mask.shape + (num_class,))
         for i in range(num_class):
-            index = np.where(mask == i)
+            #index = np.where(mask == i)
             index_mask = (index[0],index[1],index[2],np.zeros(len(index[0]),dtype = np.int64) + i) if (len(mask.shape) == 4) else (index[0],index[1],np.zeros(len(index[0]),dtype = np.int64) + i)
             new_mask[index_mask] = 1
         new_mask = np.reshape(new_mask,(new_mask.shape[0],new_mask.shape[1]*new_mask.shape[2],new_mask.shape[3])) if flag_multi_class else np.reshape(new_mask,(new_mask.shape[0]*new_mask.shape[1],new_mask.shape[2]))
         mask = new_mask
     elif(np.max(img) > 1):
-        img = normalizeData(img)
+        #img = normalizeData(img) As the new way of normalizing data handles this it is no longer
         img = claheEqualization(img)
         img = adjustGamma(img, 1.2)
+        img = trans.resize(img, target_size)
+        mask = trans.resize(mask, target_size)
         img = (img - np.min(img)) / (np.max(img) - np.min(img))
         #img = img / 255
         mask = (mask - np.min(mask)) / (np.max(mask) - np.min(mask))
         #mask = mask / 255
-        img[img > 0.72] = 1
-        img[img <= 0.72] = 0
         mask[mask > 0.32] = 1
         mask[mask <= 0.32] = 0
     return (img,mask)
 
 def normalizeData(img):
-    assert (len(img.shape)==4)
-    assert (img.shape[1]==1)
+    assert (len(img.shape)==4) 
+    assert (img.shape[1]==1) 
     imgNormalized = np.empty(img.shape)
     imgStd = np.std(img)
     imgMean = np.mean(img)
     imgNormalized = (img-imgMean)/imgStd
     for i in range(img.shape[0]):
-        imgNormalized[i] = ((imgNormalized[i] - np.min(imgNormalized[i])) / (np.max(imgNormalized[i])-np.min(imgNormalized[i])))*255
-    return imgNormalized
+        imgNormalized[i] = ((imgNormalized[i] - np.min(imgNormalized[i])) / (np.max(imgNormalized[i])-np.min(imgNormalized[i])))*255 # Essentially the same as what's happening in adjust data
+    return imgNormalized # I wasn't sure that my normalisation method was fully functional so I added this from a model that I knew worked for reliability
 
 def claheEqualization(img):
     assert (len(img.shape)==4)
@@ -50,7 +50,7 @@ def claheEqualization(img):
         imgEqualized[i,0] = clahe.apply(np.array(img[i,0], dtype = np.uint8))
     return imgEqualized
 
-def adjustGamma(img, gamma=1.0):
+def adjustGamma(img, gamma):
     assert (len(img.shape)==4)
     assert (img.shape[1]==1)
     invGamma = 1.0 / gamma
