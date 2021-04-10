@@ -21,17 +21,6 @@ You can find it in folder data/crackForest.
 
 The data will be trained using these 480*320 images, eventually I might convert them to a more standard resolution
 
-
-## Training
-
-The model is trained for 5 epochs.
-
-After 5 epochs, calculated accuracy is about 0.97.
-
-Loss function for the training is basically just a binary crossentropy.
-
-Later in the development of the project, a function will control when to stop the network training after a number of epochs without progress allowing for peak efficiency
-
 # How to use
 
 ## Dependencies
