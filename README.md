@@ -60,15 +60,6 @@ This tutorial depends on the following libraries:
 You will see the predicted results of test image in data/membrane/test
 
 
-## Results
-
-Use the trained model to do segmentation on test images, the result is statisfactory.
-
-![img/0test.png](img/0test.png)
-
-![img/0label.png](img/0label.png)
-
-
 ## About Keras
 
 Keras is a minimalist, highly modular neural networks library, written in Python and capable of running on top of either TensorFlow or Theano. It was developed with a focus on enabling fast experimentation. Being able to go from idea to result with the least possible delay is key to doing good research.
